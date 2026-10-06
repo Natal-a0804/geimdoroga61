@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<!-- ДВА НАЗВАНИЯ: игровое (с героем) + SEO-заголовок с темой, возрастом и «подготовка к школе» -->
+<title>Транспорт в городе — занятие для детей 6 лет | Подготовка к школе с Яшей</title>
+<meta name="description" content="Интерактивное занятие для детей 6 лет: транспорт, чтение, счёт, внимание. Подготовка к школе с папильоном Яшей.">
+<style>
+
+  :root{ --green:#2E7D32; --ink:#1a1a1a; --paper:#FAF6EC; --line:#e0dccf; --card:#fff;
+         --red:#D32F2F; --blue:#0D3C8F; }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);
+            font-family:"Segoe UI",Arial,sans-serif;overflow-x:hidden}
+  img{object-fit:contain;display:block;max-height:16vh}
+  h1{font-size:clamp(30px,7vw,50px);color:var(--green);text-align:center;line-height:1.15;margin:6px 0}
+  h2{font-size:clamp(32px,7.5vw,52px);color:var(--green);text-align:center;line-height:1.15;margin:6px 0}
+  p{font-size:clamp(26px,6vw,38px);line-height:1.3;margin:6px 0;text-align:center}
+  .sub{font-size:clamp(24px,5.4vw,34px);color:var(--ink);text-align:center;margin:4px 0 8px}
+  .sub.green{color:var(--green)}
+  .top{width:100%;display:flex;justify-content:space-between;align-items:center;
+       font-size:clamp(17px,3.8vw,24px);color:var(--green);font-weight:400}
+  .counter{font-size:clamp(17px,3.8vw,24px);color:var(--green);font-weight:400}
+  .sub.green{color:var(--green);font-weight:700}
+  .wrap{position:relative;min-height:100%;display:flex;flex-direction:column}
+  .screen{display:none;flex-direction:column;align-items:center;gap:8px;min-height:100vh;padding:10px 12px 130px}
+  .screen.on{display:flex}
+  .row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+  .btn{font-size:clamp(17px,3.8vw,24px);min-height:56px;padding:10px 18px;border-radius:14px;
+       border:2px solid var(--green);background:#fff;color:var(--green);font-weight:700;
+       cursor:pointer;touch-action:manipulation;font-family:inherit}
+  .btn.main{background:var(--green);color:#fff}
+  .card{background:var(--card);border:2px solid #cfcfcf;border-radius:16px;padding:6px;
+        display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;max-width:calc(33.3% - 14px)}
+  .card img{max-height:13vh}
+  .card .word{font-size:clamp(16px,3.6vw,22px);font-weight:700;text-align:center;line-height:1.15}
+  .card.done{border-color:var(--green);background:#F0F7F0}
+  .card.gone{opacity:.25}
+  .card.shake{animation:sh .45s}
+  @keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .vowel{color:var(--red) !important}
+  .cons{color:var(--blue) !important}
+  .feedback{font-size:clamp(28px,5.8vw,40px);font-weight:700;color:var(--ink);text-align:center;min-height:1.2em}
+  .video{width:100%;max-height:72vh;border-radius:14px;background:#000}
+  .logo{max-width:min(58vw,320px);max-height:26vh;border-radius:22px;border:4px solid #fff;
+        box-shadow:0 6px 26px rgba(0,0,0,.18)}
+  .placeholder{border:3px dashed #b9b3a3;border-radius:14px;color:#8a8474;font-size:15px;
+               display:flex;align-items:center;justify-content:center;text-align:center;
+               padding:8px;min-height:12vh;min-width:100px;max-width:140px}
+  .foot{position:fixed;left:0;right:0;bottom:0;padding:10px 12px calc(16px + env(safe-area-inset-bottom));
+        background:linear-gradient(180deg,rgba(250,246,236,0) 0%,var(--paper) 45%);display:flex;gap:12px;
+        justify-content:center;z-index:2147483000}
+  .birdcard{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:12px}
+  .birdcard img{max-height:26vh}
+  .birdcard .word{font-size:clamp(24px,5.6vw,36px);font-weight:800;text-align:center}
+  .heroimg{max-height:20vh;border-radius:14px}
+  .heropick{margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:4px;border:3px solid transparent;
+            border-radius:18px;padding:6px;cursor:pointer;flex:1 1 0;min-width:0}
+  .heropick .word{font-size:clamp(18px,4.2vw,26px);font-weight:800;text-align:center;line-height:1.1;color:var(--green)}
+  .heropick.chosen{border-color:var(--green);background:#F0F7F0}
+  .expr{font-size:clamp(34px,8vw,54px);font-weight:800;text-align:center}
+  .birds{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center;align-content:center}
+  .birds img{max-height:10vh}
+  .birds img.gone{opacity:.28}
+  .slots{display:flex;gap:0;justify-content:center;border-bottom:5px solid var(--green);padding-bottom:2px;min-height:60px;align-items:flex-end}
+  .slot.full{font-size:clamp(30px,7vw,46px);letter-spacing:0}
+  .slot{min-width:52px;min-height:56px;display:flex;align-items:center;justify-content:center;
+        font-size:clamp(26px,6vw,38px);font-weight:800;letter-spacing:-1px}
+  .words{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .sent{min-height:64px;font-size:clamp(26px,6vw,38px);font-weight:700;text-align:center}
+  .stars{font-size:64px;text-align:center}
+  .final{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:clamp(28px,6.4vw,42px);
+         text-align:center;color:var(--green)}
+  .momcard{background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 14px;max-width:620px}
+  .momcard p{font-size:clamp(18px,4vw,26px) !important;margin:0 0 4px}
+  .momcard p:last-child{margin:0}
+  .skor{color:var(--green);font-size:clamp(22px,5vw,32px);text-align:center;font-weight:700;margin:2px 0}
+  .skor.say{font-weight:400;font-size:clamp(18px,4.2vw,26px);line-height:1.25}
+  .mom{display:none}
+  /* задание 2: пары — компактно, чтобы все пять влезали и подписи не резались */
+  #s4{padding-bottom:100px;gap:6px;justify-content:space-between}
+  #s4 .card{max-width:48%;padding:4px}
+  #s4 .card img{max-height:7.5vh}
+  #s4 .card .word{font-size:clamp(13px,3vw,18px);text-align:center;line-height:1.12}
+  /* задание 5: две кнопки-героя в одну строку, компактные */
+  #s4 .btn.hero{max-width:47%;padding:0;border:none;background:transparent;gap:8px}
+  #s4 .heroimg{max-height:20vh;background:#fff;border:3px solid var(--green);border-radius:16px;padding:5px;box-shadow:0 5px 16px rgba(0,0,0,.12)}
+  #s4 #sortPic img{max-height:27vh}
+  #s4 .btn.hero .word{font-size:clamp(18px,4.4vw,24px);font-weight:800}
+  /* счёт: пять птиц в одну строку, следующие — ниже */
+  #s6 .birds img{max-height:20vh;max-width:38vw}
+  #s6 .birds{gap:6px}
+  #s6 #countBirds{gap:4px}
+  /* листочки — крупно */
+  #s5l .row img{max-height:34vh}
+  #sylPic img{max-height:38vh;max-width:84%;border-radius:14px}
+  /* «убери лишние» — крупные карточки в два ряда по три */
+  #s2 .card{max-width:31%;padding:5px}
+  #s2 .row{gap:16px 10px;margin-top:2vh}
+  #s2 .card img{width:100%;aspect-ratio:1/1;height:auto;max-height:none;object-fit:contain;border-radius:10px}
+  #s2 .card .word{font-size:clamp(16px,3.6vw,21px)}
+  /* задачи: птицы крупнее, интервал больше, экран распределён */
+  #s6,#s6b{justify-content:space-between;padding-top:2vh;padding-bottom:4vh}
+  #s6 .birds,#s6b .birds{gap:6px}
+  #s6 .birds img{max-height:20vh;max-width:38vw}
+  #s6 .birds.many img{max-width:30vw}
+  #s6b .birds img{max-height:15vh;max-width:22vw}
+  #s6 #countBirds2 img{max-height:20vh;max-width:38vw}
+  #s6b #countBirds2B img{max-height:19vh;max-width:30vw}
+  #s6b .sub{font-size:clamp(34px,8.5vw,48px)}
+  #s6 #countBirds,#s6b #countBirdsB{gap:10px}
+  /* предложение: картинка 16:9, максимально крупно */
+  #s7 .sub.green{margin-bottom:2px}
+  #sentPic{width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
+  #sentPic img{max-width:100%;max-height:100%;object-fit:contain}
+  /* видео и титул — по центру экрана */
+  #s0{justify-content:center}
+  #sz,#ss{justify-content:center}
+  #s8 .stars{font-size:52px;margin:0}
+
+  /* ── служебное для каркаса (в готовом занятии можно оставить) ── */
+  .hintbox{background:#fff;border:2px dashed var(--line);border-radius:14px;padding:8px 12px;
+           max-width:640px;font-size:clamp(16px,3.6vw,22px);color:#6b6b6b;text-align:center}
+  /* задание 6: продолжи ритм — три кружка светофора */
+  #sr{justify-content:center;gap:22px}
+  #sr .dots{display:flex;gap:clamp(14px,4.5vw,34px);justify-content:center;align-items:center}
+  #sr .sub{font-size:clamp(48px,11vw,66px)}
+  .dot{width:clamp(84px,26vw,150px);height:clamp(84px,26vw,150px);border-radius:50%;cursor:pointer;
+       border:6px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.16);
+       transition:transform .18s, box-shadow .18s;touch-action:manipulation}
+  .dot.r{background:radial-gradient(circle at 32% 28%, #ff8a80, #E53935 60%, #B71C1C)}
+  .dot.y{background:radial-gradient(circle at 32% 28%, #ffe082, #F9A825 60%, #F57F17)}
+  .dot.g{background:radial-gradient(circle at 32% 28%, #a5d6a7, #43A047 60%, #1B5E20)}
+  .dot.lit{transform:scale(1.16);box-shadow:0 0 0 12px #fff,0 0 54px 18px rgba(255,193,7,.95);filter:saturate(1.15) brightness(1.08)}
+  /* числовой ряд: клетки ровно в ряд, верный ответ встаёт в окошко */
+  .numrow{display:flex;gap:clamp(8px,2.5vw,16px);justify-content:center;align-items:center}
+  .ncell{min-width:clamp(52px,13vw,84px);height:clamp(56px,13vw,84px);display:flex;align-items:center;justify-content:center;
+         border:3px solid #cfcfcf;border-radius:12px;background:#fff;font-size:clamp(30px,7.5vw,48px);font-weight:800;color:var(--ink)}
+  .ncell.empty{color:#b9b3a3;border-style:dashed;border-color:#b9b3a3}
+  .ncell.filled{border-style:solid;border-color:var(--green);color:var(--green);background:#F0F7F0}
+  #s6c{justify-content:center;gap:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ═══════════════ ЭКРАН 1. ТИТУЛ (визитка занятия) ═══════════════
+       ЧТО МЕНЯЕМ: название (h1), подзаголовок (.sub), ролик «Начало» (video/nachalo.mp4).
+       Стиль не трогаем: логотип → название → подзаголовок → видео → кнопка «Играть». -->
+  <section class="screen" id="s0">
+    <video class="logo" id="vidlogo" src="video/logo_yasha.mp4" poster="images/poster_logo.jpg"
+           autoplay muted loop playsinline preload="metadata"></video>
+    <h1>Транспорт в городе</h1>
+    <p class="sub green">Приключение с Яшей!!!</p>
+    <video class="video" id="vid0" src="video/nachalo.mp4" poster="images/poster_nachalo.jpg"
+           playsinline preload="metadata"></video>
+    <div class="row"><button class="btn main" data-act="playStart()">▶ Играть</button></div>
+  </section>
+
+  <!-- ═══════════════ ЭКРАН 2. ЗАГАДКА (видео) ═══════════════
+       Ролик-загадка: ребёнок смотрит и отгадывает. Файл — video/zagadka.mp4.
+       Голос ведущего НЕ накладывается: он звучит внутри ролика. -->
+  <section class="screen" id="sz">
+    <h2>Загадка</h2>
+    <video class="video" id="vidz" src="video/zagadka.mp4" poster="images/poster_zagadka.jpg"
+           playsinline preload="none" data-act="vidTap('vidz')"></video>
+    <div class="feedback" id="fbz"></div>
+  </section>
+
+  <!-- ═══════════════ ЗАДАНИЕ 1. СОБЕРИ СЛОВО ИЗ СЛОГОВ ═══════════════
+       Механика «Собери слово». ЧТО МЕНЯЕМ: массив WORDS (слово, слоги, картинка).
+       Гласные красные, согласные синие — красит функция paint(). -->
+  <section class="screen" id="s1">
+    <div class="top"><span>Задание 4 из 7</span><span class="counter" id="cntSyl"></span></div>
+    <p class="sub green">Собери слово из слогов</p>
+    <div class="row" id="sylPic"></div>
+    <div class="slots" id="sylSlots"></div>
+    <div class="row" id="sylRow"></div>
+    <div class="feedback" id="fb1"></div>
+  </section>
+
+  <!-- ═══════════════ ЗАДАНИЕ 2. УБЕРИ ЛИШНИЕ ═══════════════
+       Механика «Найди лишнее». ЧТО МЕНЯЕМ: массив ODD (6 карточек: 4 правильные + 2 ловушки).
+       Ловушки в коде всегда расходятся: рядом не стоят. -->
+  <section class="screen" id="s2">
+    <div class="top"><span>Задание 1 из 7</span><span class="counter" id="cntOdd"></span></div>
+    <p class="sub green">Убери то, что летает</p>
+    <div class="row" id="oddRow"></div>
+    <div class="feedback" id="fb2"></div>
+  </section>
+
+  <!-- ═══════════════ ЗАДАНИЕ 4. ОТПРАВЬ К ГЕРОЮ (классификация) ═══════════════
+       Механика «Разложи по группам»: у каждого героя своя группа, ребёнок нажимает
+       на героя под картинкой. ЧТО МЕНЯЕМ: HEROES и SORT. -->
+  <section class="screen" id="s4">
+    <div class="top"><span>Задание 6 из 7</span><span class="counter" id="cntSort"></span></div>
+    <p class="sub green">Разложи картинки: с мотором или без мотора</p>
+    <div class="row" id="sortPic"></div>
+    <div class="row" id="sortBtns"></div>
+    <div class="feedback" id="fb4"></div>
+  </section>
+
+  <!-- ═══════════════ ЗАДАНИЕ 5. РЕШИ ЗАДАЧИ (счёт) ═══════════════
+       Механика «Реши задачку»: предметы показаны КАРТИНКАМИ в нужном количестве,
+       «улетевшие» — бледные. ЧТО МЕНЯЕМ: массив SUMS. -->
+  <section class="screen" id="s6">
+    <div class="top"><span>Задание 2 из 7</span><span class="counter" id="cntSum"></span></div>
+    <p class="sub green">Посчитай колёса</p>
+    <div class="birds" id="countBirds"></div>
+    <p class="example" id="countExpr"></p>
+    <div class="row" id="countAns"></div>
+    <div class="feedback" id="fb6"></div>
+  </section>
+  <!-- ═══════════════ ЗАДАНИЕ 3. ПРОДОЛЖИ РЯД ═══════════════
+       Числовой ряд клеточками: верный ответ встаёт в окошко. -->
+  <section class="screen" id="s6c">
+    <div class="top"><span>Задание 3 из 7</span><span class="counter" id="cntRow"></span></div>
+    <p class="sub green">Продолжи ряд</p>
+    <div class="birds" id="rowBox"></div>
+    <div class="row" id="rowAns"></div>
+    <div class="feedback" id="fbRow"></div>
+  </section>
+
+  <!-- ═══════════════ ЗАДАНИЕ 4. РЕШИ ЗАДАЧКИ (счёт) ═══════════════
+       Задачки на состав 6: машины и автобусы картинками, «уехавшие» — бледные. -->
+  <section class="screen" id="s6b">
+    <div class="top"><span>Задание 5 из 7</span><span class="counter" id="cntSumB"></span></div>
+    <p class="sub green">Реши задачки</p>
+    <div class="birds" id="countBirdsB"></div>
+    <p class="example" id="countExprB"></p>
+    <div class="row" id="countAnsB"></div>
+    <div class="feedback" id="fb6b"></div>
+  </section>
+
+
+  <!-- ═══════════════ ЗАДАНИЕ 6. ПРОДОЛЖИ РИТМ ═══════════════
+       Три кружка светофора (красный, жёлтый, зелёный) показывают ритм: 3, 5 и 7 вспышек.
+       Ребёнок повторяет — нажимает на кружки в том же порядке. -->
+  <section class="screen" id="sr">
+    <div class="top"><span>Задание 7 из 7</span><span class="counter" id="cntRit"></span></div>
+    <p class="sub green">Повтори ритм</p>
+    <div class="dots">
+      <div class="dot r" data-act="ritPick(el,0)"></div>
+      <div class="dot y" data-act="ritPick(el,1)"></div>
+      <div class="dot g" data-act="ritPick(el,2)"></div>
+    </div>
+    <div class="feedback" id="fbR"></div>
+  </section>
+
+  <!-- ═══════════════ ФИНАЛ ═══════════════
+       ⭐ НАД видео → видео-итог → пословица → «Маме 💛» → «Пройти заново».
+       Пословица — курсивом, с большой буквы и точкой. -->
+  <section class="screen" id="s8">
+    <div class="stars">⭐</div>
+    <video class="video" id="vid8" src="video/itog.mp4" poster="images/poster_itog.jpg"
+           playsinline preload="none"></video>
+    <p class="final">Тише едешь — дальше будешь.</p>
+    <div class="momcard">
+      <p>Маме 💛</p>
+      <p>Погуляйте у дороги: назовите транспорт, который увидите, посчитайте колёса у машин. Похвалите за старание!</p>
+    </div>
+    <button class="btn main" data-act="restart()">Пройти заново</button>
+  </section>
+
+</div>
+<div class="foot" id="foot"></div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   ЗАНЯТИЕ «ТРАНСПОРТ В ГОРОДЕ» (6 лет). Порядок экранов (формула 6 лет, 5 заданий):
+   s0 титул → s2 З1 «Убери лишние» → s6 З2 «Посчитай колёса» → s6c З3 «Продолжи ряд»
+   → sz загадка про светофор (СЕРЕДИНА) → s1 З4 «Собери слово» → s6b З5 «Реши задачки»
+   → s4 З6 «С мотором / без мотора» → sr З7 «Повтори ритм» → s8 финал.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ═══ МЕНЯЕМ ЗДЕСЬ 1: НАЗВАНИЯ И КЛЮЧИ ОЗВУЧКИ ═══
+   Каждый ключ — имя файла из папки sounds. Нет ключа — экран молчит. */
+var SCREEN_SAY = {
+  /* голос Наташи (записано 05.10): экран → имя файла из папки sounds.
+     Слоги звучат внутри раундов (say в WORDS), загадка — своя логика ниже. */
+  s2 : 'u_vozd',    /* «Убери воздушный транспорт» */
+  s6 : 'k_vhod',    /* «Посчитай колёса» */
+  s4 : 'm_vhod',    /* «Транспорт с мотором — Яше, без мотора — Баловашке» */
+  sr : 'rit_vhod'   /* «Повтори ритм» */
+};
+
+/* переходы между экранами (задаются вашим порядком занятия) */
+var NEXT = { s0:'s2', s2:'s6', s6:'s6c', s6c:'sz', sz:'s1', s1:'s6b', s6b:'s4', s4:'sr', sr:'s8' };
+var VIDEO_SHOW = { s8:'vid8' };   /* загадка — своя логика: сначала «Загадка!», потом ролик */
+
+/* ═══ МЕНЯЕМ ЗДЕСЬ 2: ЧТО ПОКАЗЫВАТЬ ═══ */
+
+/* Задание 1 — слова из слогов (механика «Собери слово») */
+var WORDS = [
+  /* say — голос слова: звучит, когда слово показано (до сборки) */
+  { w:'МАШИНА',  syl:['МА','ШИ','НА'],  i:'mashina.jpg',  say:'syl1' },
+  { w:'ТАКСИ',   syl:['ТАК','СИ'],      i:'taksi.jpg',    say:'syl2' },
+  { w:'ТРАМВАЙ', syl:['ТРАМ','ВАЙ'],    i:'tramvay.jpg',  say:'syl3' },
+  { w:'САМОКАТ', syl:['СА','МО','КАТ'], i:'samokat.jpg',  say:'syl4' },
+  { w:'ВЕРТОЛЁТ', syl:['ВЕР','ТО','ЛЁТ'], i:'vertolyot.jpg', say:'syl5' }
+];
+
+/* Задание 2 — «убери лишние»: good:true — правильные, good:false — ловушки (их две) */
+var ODD = [
+  { i:'avtobus.jpg',    good:true,  w:'Автобус' },
+  { i:'tramvay.jpg',    good:true,  w:'Трамвай' },
+  { i:'trolleybus.jpg', good:true,  w:'Троллейбус' },
+  { i:'metro.jpg',      good:true,  w:'Метро' },
+  { i:'samolyot.jpg',   good:false, w:'Самолёт' },
+  { i:'vertolyot.jpg',  good:false, w:'Вертолёт' }
+];
+
+/* Механика «Найди пару» в этом занятии не используется (в банк заданий). */
+
+/* Задание 4 — классификация по героям (механика «Разложи по группам») */
+var HEROES = [
+  { i:'yasha.jpg',      t:'С МОТОРОМ', say:'' },
+  { i:'balovashka.jpg', t:'БЕЗ МОТОРА', say:'' }
+];
+var SORT = [
+  { i:'mashina.jpg',    h:0 },
+  { i:'avtobus.jpg',    h:0 },
+  { i:'trolleybus.jpg', h:0 },
+  { i:'pozharnaya.jpg', h:0 },
+  { i:'velosiped.jpg',  h:1 },
+  { i:'samokat.jpg',    h:1 }
+];
+
+/* Задание 5 — задачи: a — картинка предмета, n — сколько; faded — сколько «ушло» */
+var SUMS = [
+  /* say — вопрос раунда; ok — похвала с решением после верного ответа */
+  { a:'samokat.jpg',   n:2, expr:'2 + 2 = ?', ans:4, wrong:[3,5], ok:'k_r1ok' },
+  { a:'mashina.jpg',   n:2, expr:'4 + 4 = ?', ans:8, wrong:[7,9], say:'k_r2q', ok:'k_r2ok' },
+  { a:'velosiped.jpg', n:3, expr:'2 + 2 + 2 = ?', ans:6, wrong:[5,7], say:'k_r3q' },
+  { a:'lodka.jpg', n:1, a2:'mashina.jpg', n2:1, expr:'0 + 4 = ?', ans:4, wrong:[3,5], say:'k_r4q' }
+];
+/* Задание 3 — ряды (верный ответ встаёт в окошко) */
+var SUMSR = [
+  { row:[1,2,3,null,5], ans:4, wrong:[3,6], say:'r_123' },
+  { row:[2,4,6,null], ans:8, wrong:[7,9], say:'r_246' }
+];
+
+/* Задание 4 — задачки на состав 6 (второй счётный экран) */
+var SUMSB = [
+  { a:'mashina.jpg', n:4, a2:'avtobus.jpg', n2:2, expr:'4 + 2 = ?', ans:6, wrong:[5,7], say:'z_garazh' },
+  { a:'mashina.jpg', n:6, faded:2, expr:'6 − 2 = ?', ans:4, wrong:[3,5], say:'z_park' },
+  { a:'mashina.jpg', n:5, a2:'avtobus.jpg', n2:1, expr:'5 + 1 = ?', ans:6, wrong:[5,7], say:'z_stoyanka' }
+];
+
+/* Механика «Составь предложение» в этом занятии не используется (в банк заданий). */
+
+/* Скороговорки нет: в середине занятия — загадка про светофор (видео + картинка). */
+
+/* ═══════════════════════════════ КОД ДАЛЬШЕ НЕ ТРОГАЕМ ═══════════════════════════════ */
+
+var PRAISE = ['genialno','tochno2','p_molodec','p_da','p_konechno','p_soglasna','p_aga','p_verno','p_ty_prav','p_konechno2'];
+var HAVE = PRAISE.concat(['ne_tochno','nothing','star3',
+  'u_vozd','k_vhod','k_r1ok','k_r2q','k_r2ok','k_r3q','k_r4q','r_246','zag',
+  'syl1','syl2','syl3','syl4','syl5','z_park','z_garazh','z_stoyanka','r_123','m_vhod','rit_vhod','fin_star']);
+var HAS_IMG = {};
+function loadImgList(list){ list.forEach(function(f){ HAS_IMG[f]=1; }); }
+function picture(src, cls){
+  if(HAS_IMG[src]) return '<img src="images/'+src+'" class="'+(cls||'')+'" alt="">';
+  return '';
+}
+function q(id){ return document.getElementById(id); }
+function shuffle(a){
+  a = a.slice();
+  for(var i = a.length-1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+var VOW = 'АЕЁИОУЫЭЮЯ';
+function paint(s){
+  return String(s).split('').map(function(ch){
+    if(VOW.indexOf(ch.toUpperCase()) > -1) return '<span class="vowel">'+ch+'</span>';
+    if(/[А-Яа-яЁё]/.test(ch)) return '<span class="cons">'+ch+'</span>';
+    return ch;
+  }).join('');
+}
+var current = null, lastPraise = '', unlocked = false;
+var fading = null;   /* звук, который плавно затухает после смены */
+function fadeStop(a, ms, done){
+  if(!a || a.paused || a.ended){ if(done) done(); return; }
+  fading = a;
+  var v0 = 1; try{ v0 = a.volume || 1; }catch(e){}
+  var steps = 8, i = 0;
+  var iv = setInterval(function(){
+    i++;
+    try{ a.volume = Math.max(0, v0 * (1 - i / steps)); }catch(e){}
+    if(i >= steps){
+      clearInterval(iv);
+      try{ a.pause(); a.volume = 1; }catch(e){}
+      if(fading === a) fading = null;
+      if(done) done();
+    }
+  }, Math.max(25, Math.round(ms / steps)));
+}
+/* мягко убрать текущий звук: при смене экрана ничего не обрывается грубо и не накладывается */
+function hush(){ fadeStop(current, 200); current = null; }
+function busySound(){
+  if(current && !current.paused && !current.ended) return current;
+  if(fading && !fading.paused && !fading.ended) return fading;
+  return null;
+}
+function play(key){
+  if(HAVE.indexOf(key) < 0) return;
+  var start = function(){
+    try{ current = new Audio('sounds/'+key+'.mp3'); current.play().catch(function(){}); }catch(e){}
+  };
+  var a = busySound();
+  if(!a){ start(); }
+  else if(a === current){ current = null; fadeStop(a, 200, start); }
+  else { setTimeout(start, 230); }
+}
+function praise(){
+  var pool = PRAISE.filter(function(x){ return x !== lastPraise; });
+  var pick = pool[Math.floor(Math.random()*pool.length)];
+  lastPraise = pick; play(pick);
+}
+/* похвала с решением, если записана (например «Верно, 2 плюс 2 — 4») */
+function cheer(sq){ if(sq && sq.ok){ play(sq.ok); } else { praise(); } }
+/* фраза стартует после задержки и ждёт, пока доскажет текущий звук (не обрываем похвалу) */
+function sayQ(key, delay){
+  delay = (typeof delay === 'number') ? delay : 500;
+  var tries = 0;
+  function att(){
+    var busy = busySound();
+    if(busy && tries < 60){ tries++; setTimeout(att, 350); return; }
+    play(key);
+  }
+  setTimeout(att, delay);
+}
+function playVideo(id){
+  var v = q(id); if(!v) return;
+  try{ v.currentTime = 0; v.muted = false; v.play().catch(function(){ v.muted = true; v.play().catch(function(){}); }); }catch(e){}
+}
+function bindTapVideo(id){
+  var v = q(id); if(!v) return;
+  v.addEventListener('pointerdown', function(e){
+    e.preventDefault();
+    if(v.paused){ v.play().catch(function(){}); } else { v.pause(); }
+  });
+}
+/* тап по видео через общий делегат (data-act) — надёжнее на телефоне */
+function vidTap(id){
+  var v = q(id); if(!v) return;
+  if(v.paused){ v.play().catch(function(){ v.muted = true; v.play().catch(function(){}); }); }
+  else { v.pause(); }
+}
+/* кнопка внизу: «Дальше ➡» появляется только после выполненного задания */
+function footNext(id, text){
+  var old = q('foot').querySelector('[data-act^="go("]');
+  if(old) old.remove();
+  var b = document.createElement('button');
+  b.className = 'btn main'; b.setAttribute('data-act','go("'+id+'")'); b.textContent = text || 'Дальше ➡';
+  q('foot').appendChild(b);
+}
+/* страховка: после 3 ошибок в задании появляется «Пропустить ➡» */
+function giveSkip(id){
+  if(q('skip_'+id)) return;
+  var b = document.createElement('button');
+  b.className = 'btn'; b.id = 'skip_'+id;
+  b.setAttribute('data-act','go("'+NEXT[id]+'")'); b.textContent = 'Пропустить ➡';
+  q('foot').appendChild(b);
+}
+function show(id){
+  hush();
+  if(id !== 's0'){ var v0 = q('vid0'); if(v0){ try{ v0.pause(); }catch(e){} } }
+  if(id !== 'sz'){ var vz = q('vidz'); if(vz){ try{ vz.pause(); }catch(e){} } }
+  if(id !== 's8'){ var v8 = q('vid8'); if(v8){ try{ v8.pause(); }catch(e){} } }
+  [].slice.call(document.querySelectorAll('.screen')).forEach(function(s){ s.classList.remove('on'); });
+  q(id).classList.add('on');
+  q('foot').innerHTML = '';
+  if(id === 'sz' || id === 'ss'){                       /* видео-экраны: «Дальше» всегда доступно */
+    footNext(NEXT[id], 'Дальше ➡');
+  }
+  if(VIDEO_SHOW[id]) playVideo(VIDEO_SHOW[id]);
+  if(ONSHOW[id]) ONSHOW[id]();
+  var key = SCREEN_SAY[id];
+  if(key) play(key);
+}
+function go(id){ show(id); }
+/* титул: один тап запускает ролик, повторные НЕ перезапускают, страховка «Продолжить» */
+function playStart(){
+  var v = q('vid0');
+  if(v && v.dataset.started === '1' && !v.paused) return;
+  if(v) v.dataset.started = '1';
+  playVideo('vid0');
+  footNext(NEXT.s0, 'Продолжить ➡');
+}
+function restart(){ show('s0'); }
+var ONSHOW = {};
+
+/* ── разблокировка звука на телефоне: первый тап ── */
+['pointerdown','touchstart','click'].forEach(function(ev){
+  document.addEventListener(ev, function(){
+    if(unlocked) return; unlocked = true;
+    try{ new Audio('sounds/nothing.mp3').play().catch(function(){}); }catch(e){}
+  }, true);
+});
+
+loadImgList(['poster_logo.jpg','poster_nachalo.jpg','poster_zagadka.jpg','poster_itog.jpg',
+  'mashina.jpg','avtobus.jpg','tramvay.jpg','trolleybus.jpg','velosiped.jpg','samokat.jpg',
+  'samolyot.jpg','vertolyot.jpg','taksi.jpg','metro.jpg','pozharnaya.jpg','svetofor.jpg','lodka.jpg',
+  'yasha.jpg','balovashka.jpg']);
+
+bindTapVideo('vid0'); bindTapVideo('vid8');
+q('vid0').addEventListener('ended', function(){ if(q('s0').classList.contains('on')) show(NEXT.s0); });
+/* отгадка загадки: после ролика показываем светофор и слово */
+q('vidz').addEventListener('ended', function(){
+  if(q('sz').classList.contains('on')){
+    q('fbz').innerHTML = '<img src="images/svetofor.jpg" alt="" style="max-height:30vh;border-radius:14px">'
+      + '<div style="font-weight:800;font-size:clamp(30px,7vw,46px)">' + paint('СВЕТОФОР') + '</div>';
+  }
+});
+var zagTm = 0;
+ONSHOW['sz'] = function(){
+  q('fbz').innerHTML = '';
+  /* «Загадка!» — голос Наташи, ролик стартует после фразы (и только если мы ещё на экране) */
+  var started = false;
+  var a = new Audio('sounds/zag.mp3');
+  current = a;
+  function goz(){
+    if(started) return; started = true;
+    try{ a.pause(); }catch(e){}
+    if(q('sz').classList.contains('on')) playVideo('vidz');
+  }
+  a.onended = goz;
+  a.play().catch(goz);
+  clearTimeout(zagTm);
+  zagTm = setTimeout(goz, 4000);
+};
+q('vid8').addEventListener('ended', function(){
+  if(q('s8').classList.contains('on')) play('fin_star');
+});
+setTimeout(function(){ if(q('s0').classList.contains('on')) footNext(NEXT.s0, 'Продолжить ➡'); }, 8000);
+
+/* ── 1. СЛОГИ ─────────────────────────────────────────────────────── */
+var sylIdx = 0, sylStep = 0, sylErr = 0;
+ONSHOW['s1'] = function(){ sylIdx = 0; sylStep = 0; sylErr = 0; drawSyl(); };
+function drawSyl(){
+  var cur = WORDS[sylIdx];
+  if(sylStep === 0 || !cur.order){ cur.order = shuffle(cur.syl.slice()); }
+  if(sylStep === 0 && cur.say){ sayQ(cur.say, 600); }
+  q('sylPic').innerHTML = picture(cur.i);
+  q('sylSlots').innerHTML = cur.syl.map(function(x, k){
+    return '<div class="slot">' + (k < sylStep ? paint(x) : '') + '</div>'; }).join('');
+  var row = q('sylRow'); row.style.display = 'flex'; row.innerHTML = '';
+  cur.order.filter(function(x){ return cur.syl.indexOf(x) >= sylStep; }).forEach(function(x){
+    var b = document.createElement('button');
+    b.className = 'btn'; b.innerHTML = paint(x);
+    b.setAttribute('data-act','sylPick(el,"'+cur.syl[sylStep]+'","'+x+'")');
+    row.appendChild(b);
+  });
+  q('cntSyl').textContent = 'Слово ' + (sylIdx+1) + ' из ' + WORDS.length;
+}
+function sylPick(el, need, got){
+  if(need === got){
+    sylStep++; el.remove(); sylErr = 0;
+    if(sylStep >= WORDS[sylIdx].syl.length){
+      q('sylRow').innerHTML = ''; q('sylRow').style.display = 'none';
+      q('sylSlots').innerHTML = '<div class="slot full">' + paint(WORDS[sylIdx].w) + '</div>';
+      if(sylIdx < WORDS.length-1){ sylIdx++; sylStep = 0; praise(); setTimeout(drawSyl, 2400); }
+      else { praise(); setTimeout(function(){ footNext(NEXT.s1, 'Дальше ➡'); }, 1200); }
+    } else { drawSyl(); }
+  } else {
+    el.classList.add('shake'); play('ne_tochno');
+    setTimeout(function(){ el.classList.remove('shake'); }, 500);
+    if(++sylErr >= 3) giveSkip('s1');
+  }
+}
+
+/* ── 2. УБЕРИ ЛИШНИЕ ─────────────────────────────────────────────── */
+var oddDone = 0, oddErr = 0;
+ONSHOW['s2'] = function(){
+  oddDone = 0; oddErr = 0; q('oddRow').innerHTML = '';
+  var order = shuffle(ODD.map(function(o, k){ return k; }));
+  for(var t = 0; t < 60; t++){                       /* ловушки рядом не ставим */
+    var b1 = -1, b2 = -1;
+    order.forEach(function(k, pos){ if(!ODD[k].good){ if(b1 < 0) b1 = pos; else b2 = pos; } });
+    var sameRow = Math.floor(b1/3) === Math.floor(b2/3), sameCol = (b1 % 3) === (b2 % 3);
+    if(!sameRow && !sameCol) break;
+    order = shuffle(order);
+  }
+  order.forEach(function(k){
+    var o = ODD[k], d = document.createElement('div');
+    d.className = 'card'; d.id = 'od'+k;
+    d.innerHTML = picture(o.i) + '<div class="word">' + paint(o.w) + '</div>';
+    d.setAttribute('data-act','oddPick(el,'+k+')');
+    q('oddRow').appendChild(d);
+  });
+  q('cntOdd').textContent = 'Убрано: ' + oddDone + ' из ' + ODD.filter(function(o){ return !o.good; }).length;
+};
+function oddPick(el, k){
+  if(!ODD[k].good){
+    el.classList.add('gone'); el.removeAttribute('data-act'); oddDone++; oddErr = 0;
+    q('cntOdd').textContent = 'Убрано: ' + oddDone + ' из ' + ODD.filter(function(o){ return !o.good; }).length;
+    if(oddDone === ODD.filter(function(o){ return !o.good; }).length){ praise(); setTimeout(function(){ footNext(NEXT.s2,'Дальше ➡'); }, 1200); }
+  } else {
+    el.classList.add('shake'); play('ne_tochno');
+    setTimeout(function(){ el.classList.remove('shake'); }, 500);
+    if(++oddErr >= 3) giveSkip('s2');
+  }
+}
+
+/* ── 4. ОТПРАВЬ К ГЕРОЮ ──────────────────────────────────────────── */
+var sortQueue = [], sortErr = 0, sortDone = 0;
+ONSHOW['s4'] = function(){
+  sortQueue = shuffle(SORT); sortErr = 0; sortDone = 0;
+  drawSort();
+};
+function drawSort(){
+  var cur = sortQueue[0];
+  q('sortPic').innerHTML = cur ? picture(cur.i) : '';
+  var row = q('sortBtns'); row.innerHTML = '';
+  if(!cur){
+    /* финал: экран не пустует — «Молодец!», герои остаются на местах */
+    q('sortPic').innerHTML = '<div style="font-size:clamp(34px,8.5vw,52px);font-weight:800;color:var(--green)">Молодец!</div>';
+    HEROES.forEach(function(h){
+      var b2 = document.createElement('button');
+      b2.className = 'btn hero';
+      b2.innerHTML = picture(h.i, 'heroimg') + '<div class="word">' + paint(h.t) + '</div>';
+      row.appendChild(b2);
+    });
+    praise(); setTimeout(function(){ footNext(NEXT.s4,'Дальше ➡'); }, 1200);
+    return;
+  }
+  HEROES.forEach(function(h, k){
+    var b = document.createElement('button');
+    b.className = 'btn hero';
+    b.innerHTML = picture(h.i, 'heroimg') + '<div class="word">' + paint(h.t) + '</div>';
+    b.setAttribute('data-act','sortPick(el,'+k+')');
+    row.appendChild(b);
+  });
+  q('cntSort').textContent = 'Найдено: ' + sortDone + ' из ' + SORT.length;
+}
+function sortPick(el, k){
+  if(k === sortQueue[0].h){
+    sortQueue.shift(); sortDone++; sortErr = 0;
+    q('cntSort').textContent = 'Найдено: ' + sortDone + ' из ' + SORT.length;
+    drawSort();
+  } else {
+    el.classList.add('shake'); play('ne_tochno');
+    setTimeout(function(){ el.classList.remove('shake'); }, 500);
+    if(++sortErr >= 3) giveSkip('s4');
+  }
+}
+
+/* ── 5. ЗАДАЧИ ───────────────────────────────────────────────────── */
+var sumIdx = 0, sumErr = 0;
+ONSHOW['s6'] = function(){ sumIdx = 0; sumErr = 0; drawSum(); };
+function drawSum(){
+  var s = SUMS[sumIdx];
+  var box = q('countBirds'); box.innerHTML = '';
+  if(s.row){
+    box.innerHTML = '<div class="numrow">' + s.row.map(function(v){
+      return (v === null) ? '<span class="ncell empty">?</span>' : '<span class="ncell">' + v + '</span>';
+    }).join('') + '</div>';
+    q('countExpr').textContent = 'Продолжи ряд';
+  } else {
+  var total = s.n + (s.n2 || 0);
+  box.className = 'birds' + (total >= 3 ? ' many' : '');
+  var line = document.createElement('div'); line.className = 'birds';
+  for(var i = 0; i < total; i++){
+    var im = document.createElement('img');
+    im.src = 'images/' + ((s.n2 && i >= s.n) ? s.a2 : s.a);
+    if(s.faded && i >= total - s.faded) im.className = 'gone';
+    if(i < s.n){ line.appendChild(im); }
+    else {
+      var l2 = q('countBirds2');
+      if(!l2){ l2 = document.createElement('div'); l2.className = 'birds'; l2.id = 'countBirds2'; box.appendChild(l2); }
+      l2.appendChild(im);
+    }
+  }
+  box.insertBefore(line, box.firstChild);
+  q('countExpr').textContent = s.expr;
+  }
+  q('cntSum').textContent = 'Пример ' + (sumIdx+1) + ' из ' + SUMS.length;
+  var row = q('countAns'); row.innerHTML = '';
+  shuffle([s.ans].concat(s.wrong)).forEach(function(v){
+    var b = document.createElement('button');
+    b.className = 'btn ans'; b.textContent = v;
+    b.setAttribute('data-act','sumPick(el,'+v+')');
+    row.appendChild(b);
+  });
+  if(s.say){ sayQ(s.say, (sumIdx === 0) ? 3200 : 500); }
+}
+function sumPick(el, v){
+  if(v === SUMS[sumIdx].ans){
+    sumErr = 0;
+    var sq = SUMS[sumIdx];
+    if(sq.expr){ q('countExpr').textContent = sq.expr.replace('?', v); }
+    if(sq.row){ var ec = document.querySelector('#s6 .ncell.empty'); if(ec){ ec.textContent = v; ec.classList.remove('empty'); ec.classList.add('filled'); } }
+    if(sumIdx < SUMS.length-1){ sumIdx++; cheer(sq); setTimeout(drawSum, 2400); }
+    else { cheer(sq); setTimeout(function(){ footNext(NEXT.s6,'Дальше ➡'); }, 1200); }
+  } else {
+    el.classList.add('shake'); play('ne_tochno');
+    setTimeout(function(){ el.classList.remove('shake'); }, 500);
+    if(++sumErr >= 3) giveSkip('s6');
+  }
+}
+
+/* ── 4. ЗАДАЧКИ (второй счётный экран) ────────────────────────────── */
+var sumIdxB = 0, sumErrB = 0;
+ONSHOW['s6b'] = function(){ sumIdxB = 0; sumErrB = 0; drawSumB(); };
+function drawSumB(){
+  var s = SUMSB[sumIdxB];
+  var box = q('countBirdsB'); box.innerHTML = '';
+  var total = s.n + (s.n2 || 0);
+  var line = document.createElement('div'); line.className = 'birds';
+  for(var i = 0; i < total; i++){
+    var im = document.createElement('img');
+    im.src = 'images/' + ((s.n2 && i >= s.n) ? s.a2 : s.a);
+    if(s.faded && i >= total - s.faded) im.className = 'gone';
+    if(i < s.n){ line.appendChild(im); }
+    else {
+      var l2 = q('countBirds2B');
+      if(!l2){ l2 = document.createElement('div'); l2.className = 'birds'; l2.id = 'countBirds2B'; box.appendChild(l2); }
+      l2.appendChild(im);
+    }
+  }
+  box.insertBefore(line, box.firstChild);
+  q('countExprB').textContent = s.expr;
+  q('cntSumB').textContent = 'Пример ' + (sumIdxB+1) + ' из ' + SUMSB.length;
+  var row = q('countAnsB'); row.innerHTML = '';
+  shuffle([s.ans].concat(s.wrong)).forEach(function(v){
+    var b = document.createElement('button');
+    b.className = 'btn ans'; b.textContent = v;
+    b.setAttribute('data-act','sumPickB(el,'+v+')');
+    row.appendChild(b);
+  });
+  if(s.say){ sayQ(s.say, (sumIdxB === 0) ? 1400 : 500); }
+}
+function sumPickB(el, v){
+  if(v === SUMSB[sumIdxB].ans){
+    sumErrB = 0;
+    q('countExprB').textContent = SUMSB[sumIdxB].expr.replace('?', v);
+    if(sumIdxB < SUMSB.length-1){ cheer(SUMSB[sumIdxB]); sumIdxB++; setTimeout(drawSumB, 2400); }
+    else { cheer(SUMSB[sumIdxB]); setTimeout(function(){ footNext(NEXT.s6b,'Дальше ➡'); }, 1200); }
+  } else {
+    el.classList.add('shake'); play('ne_tochno');
+    setTimeout(function(){ el.classList.remove('shake'); }, 500);
+    if(++sumErrB >= 3) giveSkip('s6b');
+  }
+}
+/* ── 6. ПРОДОЛЖИ РИТМ (внимание) ─────────────────────────────────── */
+var RIT_LEN = [3, 4, 5];
+var ritRound = 0, ritSeq = [], ritStep = 0, ritErr = 0, ritToken = 0, ritBusy = true;
+ONSHOW['sr'] = function(){ ritRound = 0; ritBusy = true; startRound(); };
+function makeSeq(n){
+  var s = [];
+  for(var i = 0; i < n; i++){
+    var c;
+    do { c = Math.floor(Math.random()*3); }
+    while(i >= 2 && s[i-1] === c && s[i-2] === c);
+    s.push(c);
+  }
+  return s;
+}
+function litDot(c){
+  var ds = document.querySelectorAll('#sr .dot');
+  var d = ds[c]; if(!d) return;
+  d.classList.add('lit');
+  setTimeout(function(){ d.classList.remove('lit'); }, 620);
+}
+function setRit(t){ q('fbR').textContent = t; }
+function startRound(){
+  ritBusy = true; ritStep = 0; ritErr = 0;
+  ritSeq = makeSeq(RIT_LEN[ritRound]);
+  q('cntRit').textContent = 'Ритм ' + (ritRound+1) + ' из ' + RIT_LEN.length;
+  setRit('Смотри внимательно…');
+  var token = ++ritToken, t = 800;
+  for(var i = 0; i < ritSeq.length; i++){
+    (function(cc, tt){ setTimeout(function(){ if(token !== ritToken) return; litDot(cc); }, tt); })(ritSeq[i], t);
+    t += 920;
+  }
+  setTimeout(function(){ if(token !== ritToken) return; ritBusy = false; setRit('Повтори ритм!'); }, t + 150);
+}
+function ritPick(el, c){
+  if(ritBusy) return;
+  if(c === ritSeq[ritStep]){
+    litDot(c);
+    ritStep++;
+    if(ritStep >= ritSeq.length){
+      ritBusy = true;
+      if(ritRound < RIT_LEN.length - 1){
+        setRit('Верно! Смотри дальше…');
+        ritRound++;
+        setTimeout(startRound, 1600);
+      } else {
+        setRit('Молодец!');
+        praise();
+        footNext('s8', 'Дальше ➡');
+      }
+    }
+  } else {
+    el.classList.add('shake'); play('ne_tochno');
+    setTimeout(function(){ el.classList.remove('shake'); }, 500);
+    ritErr++;
+    if(ritErr >= 3){ ritBusy = true; giveSkip('sr'); }
+    else { setRit('Посмотри ещё раз…'); ritBusy = true; setTimeout(startRound, 1500); }
+  }
+}
+/* ── 3. ПРОДОЛЖИ РЯД (числовой ряд, ответ встаёт в окошко) ─────────── */
+var rowIdx = 0, rowErr = 0;
+ONSHOW['s6c'] = function(){ rowIdx = 0; rowErr = 0; drawRow(); };
+function drawRow(){
+  var s = SUMSR[rowIdx];
+  q('rowBox').innerHTML = '<div class="numrow">' + s.row.map(function(v){
+    return (v === null) ? '<span class="ncell empty">?</span>' : '<span class="ncell">' + v + '</span>';
+  }).join('') + '</div>';
+  q('cntRow').textContent = 'Ряд ' + (rowIdx+1) + ' из ' + SUMSR.length;
+  var row = q('rowAns'); row.innerHTML = '';
+  shuffle([s.ans].concat(s.wrong)).forEach(function(v){
+    var b = document.createElement('button');
+    b.className = 'btn ans'; b.textContent = v;
+    b.setAttribute('data-act','rowPick(el,'+v+')');
+    row.appendChild(b);
+  });
+  if(s.say){ sayQ(s.say, (rowIdx === 0) ? 600 : 500); }
+}
+function rowPick(el, v){
+  if(v === SUMSR[rowIdx].ans){
+    rowErr = 0;
+    var ec = document.querySelector('#s6c .ncell.empty');
+    if(ec){ ec.textContent = v; ec.classList.remove('empty'); ec.classList.add('filled'); }
+    if(rowIdx < SUMSR.length-1){ cheer(SUMSR[rowIdx]); rowIdx++; setTimeout(drawRow, 2400); }
+    else { cheer(SUMSR[rowIdx]); setTimeout(function(){ footNext(NEXT.s6c, 'Дальше ➡'); }, 1200); }
+  } else {
+    el.classList.add('shake'); play('ne_tochno');
+    setTimeout(function(){ el.classList.remove('shake'); }, 500);
+    if(++rowErr >= 3) giveSkip('s6c');
+  }
+}
+/* ── клики: всё на касание (pointerdown), как требует чек-лист ── */
+document.addEventListener('pointerdown', function(e){
+  var el = e.target.closest ? e.target.closest('[data-act]') : null;
+  if(!el) return;
+  e.preventDefault();
+  var code = el.getAttribute('data-act');
+  try{ (new Function('var el=arguments[0];' + code))(el); }catch(err){}
+}, false);
+
+show('s0');
+</script>
+</body>
+</html>
